@@ -8,72 +8,57 @@
 
 #import "UIButtonAdditions.h"
 
-@interface UIButton (Private)
+@interface UIButton (CrashCorp_Private)
 
-+ (UIButton*) _buttonWithImage:(UIImage*)image;
++ (UIButton*) _button:(UIImage*)image;
 
 @end
-
 
 @implementation UIButton (CrashCorp)
 
 + (UIButton*) blackButton
 {
-	NSLog(@"Creating black button");
-	
-	UIImage* image = [[UIImage imageNamed:@"BlackButton.png"]
-					  stretchableImageWithLeftCapWidth:12.0 topCapHeight:0.0];
-	if(!image)
-		NSLog(@"Unable to find image");
-
-    return [UIButton _buttonWithImage:image];
+	return [UIButton _button:[UIImage imageNamed:@"BlackButton.png"]];
 }
 
 + (UIButton*) whiteButton
 {
-	UIImage* image = [[UIImage imageNamed:@"WhiteButton.png"]
-					  stretchableImageWithLeftCapWidth:12.0 topCapHeight:0.0];
-	
-	if(!image)
-		NSLog(@"Unable to find image");
-
-    return [UIButton _buttonWithImage:image];
+	return [UIButton _button:[UIImage imageNamed:@"WhiteButton.png"]];
 }
-
 
 + (UIButton*) redButton
 {
-	return nil;
+	return [UIButton _button:[UIImage imageNamed:@"RedButton.png"]];
 }
 
 + (UIButton*) blueButton
 {
-	UIImage* image = [[UIImage imageNamed:@"BlueButton.png"]
-					  stretchableImageWithLeftCapWidth:12.0 topCapHeight:0.0];
-	
-	if(!image)
-		NSLog(@"Unable to find image");
-	
-    return [UIButton _buttonWithImage:image];
+	return [UIButton _button:[UIImage imageNamed:@"BlueButton.png"]];
 }
 
 + (UIButton*) greenButton
 {
-	return nil;	
+	return [UIButton _button:[UIImage imageNamed:@"GreenButton.png"]];
 }
 
-+ (UIButton*) _buttonWithImage:(UIImage*)image
++ (UIButton*) _button:(UIImage*)image
 {
+    if(!image)
+		    NSLog(@"Unable to find image. Either the image hasn't been added to the project or it hasn't been created yet.");
+    else
+        image = [image stretchableImageWithLeftCapWidth:12.0 topCapHeight:0.0];
+
 	UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:[UIFont buttonFontSize]];
+	button.titleLabel.font = [UIFont boldSystemFontOfSize:[UIFont buttonFontSize]];
 	[button setBackgroundImage:image forState:UIControlStateNormal];
 	[button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	[button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
 	[button setTitleShadowColor:[UIColor colorWithWhite:0 alpha:0.5]
 					   forState:UIControlStateNormal];
-	[button.titleLabel setShadowOffset:CGSizeMake(0, 1)];
-    button.frame = CGRectMake(0.0, 0.0, 300.0, 46.0);
-	return button;    
+  button.frame = CGRectMake(0.0, 0.0, 300.0, 46.0);
+	button.titleLabel.shadowOffset = CGSizeMake(0, 1);
+	
+	return button;
 }
 
 @end
